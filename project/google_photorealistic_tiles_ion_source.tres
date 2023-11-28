@@ -1,0 +1,5 @@
+[gd_resource type="GDCesium3DTilesetIonSource" format=3 uid="uid://dqary3o3e4tt0"]
+
+[resource]
+asset_id = 123
+access_token = "ABC"

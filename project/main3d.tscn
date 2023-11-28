@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3ybojuiglemh"]
+
+[ext_resource type="GDCesium3DTilesetIonSource" uid="uid://dqary3o3e4tt0" path="res://google_photorealistic_tiles_ion_source.tres" id="1_rwq5d"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="GDCesium3DTileset" type="GDCesium3DTileset" parent="."]
+source = ExtResource("1_rwq5d")

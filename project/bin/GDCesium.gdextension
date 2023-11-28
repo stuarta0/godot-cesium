@@ -1,0 +1,10 @@
+[configuration]
+
+entry_symbol = "GDCesiumInit"
+compatibility_minimum = "4.1"
+
+[libraries]
+
+linux.debug.x86_64 = "res://bin/libGDCesium-d.so"
+macos.debug = "res://bin/libGDCesium-d.dylib"
+windows.debug.x86_64 = "res://bin/GDCesium-d.dll"
