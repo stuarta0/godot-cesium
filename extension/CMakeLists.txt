@@ -11,25 +11,25 @@ if ( EXISTS "${LOC_PATH}" )
     message( FATAL_ERROR "You cannot build in the source directory. Please use a build subdirectory." )
 endif()
 
-# Add paths to modules
-list( APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/" )
+# # Add paths to modules
+# list( APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/" )
 
-# Turn on link time optimization for everything
-set( CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE ON )
+# # Turn on link time optimization for everything
+# set( CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE ON )
 
-# Output compile commands to compile_commands.json (for debugging CMake issues)
-set( CMAKE_EXPORT_COMPILE_COMMANDS ON )
+# # Output compile commands to compile_commands.json (for debugging CMake issues)
+# set( CMAKE_EXPORT_COMPILE_COMMANDS ON )
 
-# Build universal lib on macOS
-# Note that CMAKE_OSX_ARCHITECTURES must be set before project().
-if ( APPLE )
-    set( CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "" )
-endif()
+# # Build universal lib on macOS
+# # Note that CMAKE_OSX_ARCHITECTURES must be set before project().
+# if ( APPLE )
+#     set( CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "" )
+# endif()
 
 # Main project information
 project( GDCesium
     LANGUAGES
-        CXX
+        CXX C
     VERSION
         0.1.0
 )
@@ -53,11 +53,13 @@ endif()
 # install directory and needs to be consistent with the paths in the gdextension file.
 #   e.g. linux.release.x86_64 = "lib/Linux-x86_64/libGDExtensionTemplate.so"
 set( LIB_DIR "lib/${CMAKE_SYSTEM_NAME}-${LIB_ARCH}" )
+#set( LIB_DIR "bin" )
 
 message( STATUS "Building ${PROJECT_NAME} for ${LIB_ARCH} on ${CMAKE_SYSTEM_NAME}")
 
 # BUILD_OUTPUT_DIR is where we put the resulting library (in the build directory)
 set( BUILD_OUTPUT_DIR "${PROJECT_BINARY_DIR}/${PROJECT_NAME}/" )
+#set( BUILD_OUTPUT_DIR "${CMAKE_CURRENT_LIST_DIR}/../project/" )
 
 set_target_properties( ${PROJECT_NAME}
     PROPERTIES
@@ -74,18 +76,18 @@ if( NOT DEFINED CMAKE_DEBUG_POSTFIX )
     )
 endif()
 
-# Warnings
-include( CompilerWarnings )
+# # Warnings
+# include( CompilerWarnings )
 
-# Create and include version info file from git
-include( GitVersionInfo )
+# # Create and include version info file from git
+# include( GitVersionInfo )
 
 add_subdirectory( src )
 
 # Install library and extension file in ${CMAKE_INSTALL_PREFIX}/${PROJECT_NAME}
 set( INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/${PROJECT_NAME}/" )
 
-message( STATUS "Install directory: ${INSTALL_DIR}")
+# message( STATUS "Install directory: ${INSTALL_DIR}")
 
 install( TARGETS ${PROJECT_NAME}
     LIBRARY
@@ -96,13 +98,13 @@ install( TARGETS ${PROJECT_NAME}
 
 add_subdirectory( templates )
 
-# ccache
-# Turns on ccache if found
-include( ccache )
+# # ccache
+# # Turns on ccache if found
+# include( ccache )
 
-# Formatting
-# Adds a custom target to format all the code at once
-include( ClangFormat )
+# # Formatting
+# # Adds a custom target to format all the code at once
+# include( ClangFormat )
 
 # godot-cpp
 # From here: https://github.com/godotengine/godot-cpp
@@ -125,4 +127,38 @@ set_target_properties( godot-cpp
 target_link_libraries( ${PROJECT_NAME}
     PRIVATE
         godot-cpp
+)
+
+# cesium-native
+# From here: https://github.com/CesiumGS/cesium-native
+if ( NOT EXISTS "${CMAKE_CURRENT_LIST_DIR}/extern/cesium-native/CMakeLists.txt" )
+    message(
+        FATAL_ERROR
+            "[${PROJECT_NAME}] The cesium-native submodule was not downloaded. Please update submodules: git submodule update --init --recursive."
+    )
+endif()
+
+set(CESIUM_TESTS_ENABLED OFF)
+set(BUILD_SHARED_LIB OFF)
+
+add_subdirectory( extern/cesium-native )
+
+# The complete set of cesium-native libraries; can probably be culled
+target_link_libraries( ${PROJECT_NAME}
+    PRIVATE
+        Cesium3DTiles
+        Cesium3DTilesContent
+        Cesium3DTilesReader
+        Cesium3DTilesSelection
+        Cesium3DTilesWriter
+        CesiumAsync
+        CesiumGeometry
+        CesiumGeospatial
+        CesiumGltf
+        CesiumGltfReader
+        CesiumGltfWriter
+        CesiumIonClient
+        CesiumJsonReader
+        CesiumJsonWriter
+        CesiumUtility
 )

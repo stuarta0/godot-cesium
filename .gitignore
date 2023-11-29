@@ -3,3 +3,4 @@ CMakeLists.txt.user
 extension/build
 .DS_Store
 *.dylib
+build/

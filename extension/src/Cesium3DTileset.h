@@ -4,7 +4,7 @@
 #include <godot_cpp/classes/node3d.hpp>
 #include <godot_cpp/classes/resource.hpp>
 
-//#include <Cesium3DTilesSelection/Tileset.h>
+#include <Cesium3DTilesSelection/Tileset.h>
 
 
 namespace godot {

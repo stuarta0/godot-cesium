@@ -2,3 +2,6 @@
 	path = extension/extern/godot-cpp
 	url = https://github.com/godotengine/godot-cpp.git
 	branch = 4.1
+[submodule "extension/extern/cesium-native"]
+	path = extension/extern/cesium-native
+	url = https://github.com/CesiumGS/cesium-native

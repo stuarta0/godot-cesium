@@ -1,5 +1,5 @@
 init:
-    cd extension && cmake -B build -DCMAKE_BUILD_TYPE=Debug
+    cd extension && rm -rf build && cmake -B build -DCMAKE_BUILD_TYPE=Debug
 
 build:
     cd extension && cmake --build build --parallel

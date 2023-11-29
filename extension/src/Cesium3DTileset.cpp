@@ -3,6 +3,8 @@
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 
+#include <Cesium3DTilesSelection/Tileset.h>
+
 using namespace godot;
 
 void GDCesium3DTileset::_bind_methods() {
@@ -15,6 +17,7 @@ void GDCesium3DTileset::_bind_methods() {
 
 GDCesium3DTileset::GDCesium3DTileset() {
 	// Initialize any variables here.
+	//tileset = Cesium3DTilesSelection::Tileset(nullptr, "", Cesium3DTilesSelection::TilesetOptions());
 }
 
 GDCesium3DTileset::~GDCesium3DTileset() {
@@ -22,7 +25,7 @@ GDCesium3DTileset::~GDCesium3DTileset() {
 }
 
 void GDCesium3DTileset::destroy_tileset() {
-	godot::UtilityFunctions::print( "Destory tileset: ", source->call("get_uri") );
+	godot::UtilityFunctions::print( "Destory tileset" );
 }
 
 void GDCesium3DTileset::_process(double delta) {
