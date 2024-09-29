@@ -1,3 +1,11 @@
+# Note: this repo is deprecated
+
+[Battle Road](https://www.linkedin.com/company/battle-road-digital/) obtained a Cesium Ecosystem Grant in September 2024 to develop a Cesium plugin for Godot.
+
+More details here: https://cesium.com/blog/2024/09/26/cesium-plugin-for-godot/
+
+
+
 # Cesium for Godot
 
 *100% WIP. Currently targeting Godot 4.1.*
